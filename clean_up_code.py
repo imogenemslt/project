@@ -31,4 +31,15 @@ dataIn = file.read()
 myList = dataIn.split(",")
 print(type(myList))
 
+#sorting list
+file =open("cleaned_up_data.csv","r")
+myList = file.read()
+myList.sort()
+print(myList)
+#list comprehention converting float into int
+file =open("cleaned_up_data.csv","r")
+dataIn = file.read()
+myList = dataIn.split(",")
+myList = [int(float(item)) for item in myList]
+file.close()
 
