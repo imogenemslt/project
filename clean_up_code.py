@@ -1,6 +1,6 @@
 import csv
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 DATA_URL = "https://raw.githubusercontent.com/owid/monkeypox/refs/heads/main/owid-monkeypox-data.csv"
 df = pd.read_csv(DATA_URL)
@@ -82,4 +82,14 @@ averageD = sumValueD/len(processed_death_data)
 averageD = round(averageD,2)
 print(averageD)
 
+#cases average
+averageC = sumValueC/len(processed_case_data)
+averageC = round(averageC,2)
+print(averageC)
 file.close()
+
+
+plt.plot(processed_death_data)
+plt.plot(processed_case_data)
+plt.show()
+
