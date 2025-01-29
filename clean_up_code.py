@@ -23,6 +23,17 @@ uk_df = uk_df.dropna()
 #combines both datasets
 combined_df = pd.concat([spain_df, uk_df])
 
+
+# Convert date to Year-Month format for aggregation
+combined_df['date'] = pd.to_datetime(combined_df['date'])  # Ensure datetime format
+combined_df['Year-Month'] = combined_df['date'].dt.to_period('M')  # Convert to YYYY-MM
+
+# Aggregate data by month
+monthly_data = combined_df.groupby(['location', 'Year-Month']).sum().reset_index()
+
+# Save to CSV
+monthly_data.to_csv("monthly_cleaned_data.csv", index=False)
+
 #adds the combind datasets to a csv file
 combined_df.to_csv("cleaned_up_data.csv", index=False)
 
@@ -89,7 +100,6 @@ print(averageC)
 file.close()
 
 
-plt.plot(processed_death_data)
-plt.plot(processed_case_data)
-plt.show()
-
+# plt.plot(processed_death_data)
+# plt.plot(processed_case_data)
+# plt.show()
