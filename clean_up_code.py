@@ -38,12 +38,12 @@ monthly_data.to_csv("monthly_cleaned_data.csv", index=False)
 combined_df.to_csv("cleaned_up_data.csv", index=False)
 
 #list comprehention coverting floats to ints
-file = open("cleaned_up_data.csv","r")
+file = open("monthly_cleaned_data.csv","r")
 myList = file.read()
 reader = csv.DictReader(file)
 myList.split(",")
 # Open the CSV file
-with open("cleaned_up_data.csv", "r") as file:
+with open("monthly_cleaned_data.csv", "r") as file:
     reader = csv.DictReader(file)
     
     # Extract and process death data
@@ -52,14 +52,17 @@ with open("cleaned_up_data.csv", "r") as file:
     print("Processed Death Data:", processed_death_data)
 
 # Reopen the file for case data, since the reader has been consumed
-with open("cleaned_up_data.csv", "r") as file:
+with open("monthly_cleaned_data.csv", "r") as file:
     reader = csv.DictReader(file)
     
     # Extract and process case data. used list coprihention to convert the data.
     case_data = [row['total_cases'] for row in reader if row['total_cases']]
     processed_case_data = [float(value) for value in case_data if value.replace('.', '', 1).isdigit()]
     print("Processed Case Data:", processed_case_data)
-
+    
+     # Extract and process case data. used list coprihention to convert the data.
+    month_data = [row['year-month'] for row in reader if row['total_cases']]
+    print(month_data)
 #finding the max cases
 # target_row_index = 2
 # row_values = df.iloc[target_row_index]
@@ -97,9 +100,31 @@ print(averageD)
 averageC = sumValueC/len(processed_case_data)
 averageC = round(averageC,2)
 print(averageC)
-file.close()
 
 
+
+# Create figure and axis
+fig, ax1 = plt.subplots(figsize=(10, 5))
+
+# Plot total cases on primary y-axis
+ax1.plot(month_data, processed_case_data, color='blue', marker='o', label="Total Cases")
+ax1.set_xlabel("Time (Year-Month)")
+ax1.set_ylabel("Total Cases", color='blue')
+ax1.tick_params(axis='y', labelcolor='blue')
+
+# Create secondary y-axis
+ax2 = ax1.twinx()
+ax2.plot(month_data, processed_death_data, color='red', marker='s', label="Total Deaths")
+ax2.set_ylabel("Total Deaths", color='red')
+ax2.tick_params(axis='y', labelcolor='red')
+
+# Title and layout
+plt.title("Total Cases and Total Deaths Over Time")
+fig.tight_layout()
+plt.show()
 # plt.plot(processed_death_data)
 # plt.plot(processed_case_data)
 # plt.show()
+
+file.close()
+
