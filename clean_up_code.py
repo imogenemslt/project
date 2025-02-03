@@ -103,28 +103,6 @@ print(averageC)
 
 
 
-# Create figure and axis
-fig, ax1 = plt.subplots(figsize=(10, 5))
-
-# Plot total cases on primary y-axis
-ax1.plot(month_data, processed_case_data, color='blue', marker='o', label="Total Cases")
-ax1.set_xlabel("Time (Year-Month)")
-ax1.set_ylabel("Total Cases", color='blue')
-ax1.tick_params(axis='y', labelcolor='blue')
-
-# Create secondary y-axis
-ax2 = ax1.twinx()
-ax2.plot(month_data, processed_death_data, color='red', marker='s', label="Total Deaths")
-ax2.set_ylabel("Total Deaths", color='red')
-ax2.tick_params(axis='y', labelcolor='red')
-
-# Title and layout
-plt.title("Total Cases and Total Deaths Over Time")
-fig.tight_layout()
-plt.show()
-# plt.plot(processed_death_data)
-# plt.plot(processed_case_data)
-# plt.show()
 
 file.close()
 
