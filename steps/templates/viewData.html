@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <div id="menu">
+        <table border="1">
+            <tr>
+                <td><a href="/">Home</a></td>
+                <td><a href="/viewData">See Data</a></td>
+                <td><a href="/addData">Add Data</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <h1>Step Data</h1>
+    
+    <h2>Data Table</h2>
+    <table border="1">
+        <tr><th>Date</th><th>Steps</th></tr>
+        {% for date, steps in info %}
+        <tr>
+            <td>{{ date }}</td>
+            <td>{{ steps }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Graph</h2>
+    <div id="chart"></div>
+
+    <script>
+        var graphJSON = JSON.parse('{{ graphJSON | safe }}'); 
+        Plotly.newPlot("chart", graphJSON);
+    </script>
+
+</body>
+</html>
